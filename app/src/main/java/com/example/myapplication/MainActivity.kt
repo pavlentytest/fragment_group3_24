@@ -1,12 +1,15 @@
 package com.example.myapplication
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -15,6 +18,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.concurrent.thread
+
+
+class MyDialog : DialogFragment() {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return AlertDialog.Builder(requireContext())
+            .setMessage("Какое-то сообщение!")
+            .setPositiveButton("Ok"){ _,_ -> }
+            .setNegativeButton("Cancel"){ _,_ -> }
+            .create()
+    }
+
+}
+
+
+
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -28,6 +46,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         findViewById<Button>(R.id.button2).setOnClickListener(this::onClick)
         fm = supportFragmentManager
         val fragment_array = arrayOf(FirstFragment(),SecondFragment())
+
+        MyDialog().show(fm,null)
       /*  CoroutineScope(Dispatchers.Default).launch{
             while(true) {
                 delay(3000)
